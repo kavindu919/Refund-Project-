@@ -44,8 +44,8 @@ const DamageClaimTable = () => {
     }
 
     axios
-      .put(
-        `http://localhost:4000/api/claims/updateStatus/${selectedClaim.id}`,
+      .post(
+        `http://localhost:4000/api/claims/${selectedClaim.userId}`,
         updateData
       )
       .then((response) => {
