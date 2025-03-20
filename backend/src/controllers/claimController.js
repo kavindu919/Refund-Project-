@@ -21,11 +21,30 @@ export const submitClaim = async (req, res) => {
   }
 };
 
+// export const getAllClaims = async (req, res) => {
+//   const claims = await prisma.damageClaim.findMany({
+//     include: { user: true, product: true },
+//   });
+//   res.json(claims);
+// };
+
 export const getAllClaims = async (req, res) => {
-  const claims = await prisma.damageClaim.findMany({
-    include: { user: true, product: true },
-  });
-  res.json(claims);
+  try {
+    const claims = await prisma.damageClaim.findMany({
+      include: {
+        user: true,
+        product: true, // If the product is missing, it will return null for 'product'
+      },
+    });
+
+    // Optionally, you can filter out claims without a valid product if needed
+    const filteredClaims = claims.filter((claim) => claim.product !== null);
+
+    res.json(filteredClaims); // Send filtered claims if necessary
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error retrieving claims" });
+  }
 };
 
 export const updateClaimStatus = async (req, res) => {
