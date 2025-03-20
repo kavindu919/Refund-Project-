@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/uploadimage", upload.single("image"), submitClaim);
 router.get("/getallclaims", getAllClaims);
-router.post("/:id", updateClaimStatus);
+router.post("/:userId", updateClaimStatus);
 router.get("/user/:userId", getUserClaims);
 
 export default router;

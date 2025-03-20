@@ -25,7 +25,7 @@ const LoginPage = () => {
       setLoading(false);
 
       if (response.data.userId) {
-        // Redirect to /claimpage and pass userId as query parameter
+        localStorage.setItem("userId", response.data.userId);
         navigate(`/claimpage?userId=${response.data.userId}`);
       }
     } catch (error) {
