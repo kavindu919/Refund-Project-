@@ -21,13 +21,6 @@ export const submitClaim = async (req, res) => {
   }
 };
 
-// export const getAllClaims = async (req, res) => {
-//   const claims = await prisma.damageClaim.findMany({
-//     include: { user: true, product: true },
-//   });
-//   res.json(claims);
-// };
-
 export const getAllClaims = async (req, res) => {
   try {
     const claims = await prisma.damageClaim.findMany({
@@ -48,19 +41,41 @@ export const getAllClaims = async (req, res) => {
 };
 
 export const updateClaimStatus = async (req, res) => {
-  const { status, rejectionReason } = req.body;
+  const { status, rejectionReason, userId } = req.body;
 
-  await prisma.damageClaim.update({
-    where: { id: req.params.id },
-    data: { status, rejectionReason },
-  });
+  try {
+    // Find the claim associated with the userId
+    const claim = await prisma.damageClaim.findFirst({
+      where: {
+        userId: userId,
+      },
+    });
 
-  res.json({ message: "Claim updated" });
+    if (!claim) {
+      return res.status(404).json({ message: "No claim found for this user" });
+    }
+
+    // Update the claim
+    await prisma.damageClaim.updateMany({
+      where: { userId: userId },
+      data: { status, rejectionReason },
+    });
+
+    res.json({ message: "Claim updated successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating claim", error: error.message });
+  }
 };
 
 export const getUserClaims = async (req, res) => {
   const claims = await prisma.damageClaim.findMany({
     where: { userId: req.params.userId },
+    include: {
+      user: true, // Include the related User data
+      product: true, // Include the related Product data
+    },
   });
   res.json(claims);
 };
