@@ -11,10 +11,10 @@ const app = express();
 
 const port = process.env.PORT || 4000;
 const corsOptions = {
-  origin: "http://localhost:5173", // Frontend URL
-  methods: "GET,POST,PUT,DELETE", // Allowed methods
-  allowedHeaders: "Content-Type, Authorization", // Allowed headers
-  credentials: true, // Allow cookies (if needed)
+  origin: "http://localhost:5173",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type, Authorization",
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
