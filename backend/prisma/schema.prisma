@@ -19,6 +19,7 @@ model User {
 model Product {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   name        String
+  actualPrice Float
   price       Float
   description String
   image       String
@@ -31,6 +32,7 @@ model DamageClaim {
   id              String  @id @default(auto()) @map("_id") @db.ObjectId
   userId          String  @db.ObjectId
   productId       String  @db.ObjectId
+  email           String
   image           String
   description     String
   status          String  @default("pending")
