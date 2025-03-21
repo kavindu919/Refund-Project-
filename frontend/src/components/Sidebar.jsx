@@ -9,23 +9,23 @@ const Sidebar = () => {
       </div>
       <ul className="mt-10 space-y-4">
         <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
-          <Link to="#" className="block">
-            Dashboard
+          <Link to="/refundtable" className="block">
+            Refund
           </Link>
         </li>
         <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
-          <Link to="#" className="block">
-            Manage Users
+          <Link to="/addproduct" className="block">
+            Add Product
           </Link>
         </li>
         <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
-          <Link to="#" className="block">
-            Manage Products
+          <Link to="/finance" className="block">
+            Finance
           </Link>
         </li>
         <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
-          <Link to="#" className="block">
-            Manage Rentals
+          <Link to="/balancesheet" className="block">
+            Balance Sheet
           </Link>
         </li>
       </ul>

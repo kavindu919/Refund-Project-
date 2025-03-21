@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); // Added password state
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Hook to navigate after login
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const LoginPage = () => {
         "http://localhost:4000/api/users/login",
         {
           email,
-          password, // Send the password along with email
+          password,
         }
       );
 
@@ -26,7 +26,7 @@ const LoginPage = () => {
 
       if (response.data.userId) {
         localStorage.setItem("userId", response.data.userId);
-        navigate(`/claimpage?userId=${response.data.userId}`);
+        navigate(`/orderpage?userId=${response.data.userId}`);
       }
     } catch (error) {
       setLoading(false);
@@ -75,7 +75,7 @@ const LoginPage = () => {
               Password
             </label>
             <input
-              type="password" // Changed input type to password
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"

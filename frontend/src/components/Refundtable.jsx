@@ -7,9 +7,8 @@ const DamageClaimTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedClaim, setSelectedClaim] = useState(null);
   const [status, setStatus] = useState("");
-  const [rejectionReason, setRejectionReason] = useState(""); // State for rejection reason
+  const [rejectionReason, setRejectionReason] = useState("");
 
-  // Fetch claims
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/claims/getallclaims")
@@ -18,29 +17,25 @@ const DamageClaimTable = () => {
       });
   }, []);
 
-  // Handle opening the modal
   const openModal = (claim) => {
     setSelectedClaim(claim);
     setStatus(claim.status);
-    setRejectionReason(""); // Reset rejection reason when opening the modal
+    setRejectionReason("");
     setIsModalOpen(true);
   };
 
-  // Handle status change
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
   };
 
-  // Handle rejection reason change
   const handleRejectionReasonChange = (e) => {
     setRejectionReason(e.target.value);
   };
 
-  // Handle status update
   const updateStatus = () => {
     const updateData = { status };
     if (status === "rejected" && rejectionReason) {
-      updateData.rejectionReason = rejectionReason; // Add rejection reason if status is "rejected"
+      updateData.rejectionReason = rejectionReason;
     }
 
     axios
@@ -59,9 +54,19 @@ const DamageClaimTable = () => {
       .catch((error) => console.error("Error updating status:", error));
   };
 
-  // Open image in new window
   const openImageInNewWindow = (imagePath) => {
     window.open(imagePath, "_blank");
+  };
+
+  const handleDeleteClaim = (claimId) => {
+    axios
+      .post(`http://localhost:4000/api/claims/delete/${claimId}`)
+      .then(() => {
+        setClaims((prevClaims) =>
+          prevClaims.filter((claim) => claim.id !== claimId)
+        );
+      })
+      .catch((error) => console.error("Error deleting claim:", error));
   };
 
   return (
@@ -92,7 +97,7 @@ const DamageClaimTable = () => {
                 <td className="py-3 px-6">{claim.product?.name || "N/A"}</td>
                 <td className="py-3 px-6">
                   <img
-                    src={`http://localhost:4000${claim.image}`} // Assuming the image URL is relative
+                    src={`http://localhost:4000${claim.image}`}
                     alt="Claim"
                     className="w-16 h-16 object-cover cursor-pointer"
                     onClick={() =>
@@ -103,16 +108,21 @@ const DamageClaimTable = () => {
                   />
                 </td>
                 <td className="py-3 px-6">{claim.status}</td>
-                <td className="py-3 px-6 flex justify-center gap-3">
-                  <button
-                    className="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md shadow"
-                    onClick={() => openModal(claim)}
-                  >
-                    <FiEdit className="text-lg" /> Edit
-                  </button>
-                  <button className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md shadow">
-                    <FiTrash2 className="text-lg" /> Delete
-                  </button>
+                <td className="py-3 px-6 flex items-center mt-4 justify-center gap-3">
+                  <div className="flex gap-1">
+                    <button
+                      className="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md shadow"
+                      onClick={() => openModal(claim)}
+                    >
+                      <FiEdit className="text-lg" /> Edit
+                    </button>
+                    <button
+                      className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md shadow"
+                      onClick={() => handleDeleteClaim(claim.id)}
+                    >
+                      <FiTrash2 className="text-lg" /> Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
