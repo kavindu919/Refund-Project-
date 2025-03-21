@@ -9,6 +9,8 @@ import FinancialPage from "./pages/FinancialPage";
 import BalanceSheetPage from "./pages/BalanceSheet";
 import ProductListPage from "./pages/ProductListPage";
 import OrderPage from "./pages/OrderPage";
+import NetProfitPage from "./pages/NetProfitPage";
+import StockPage from "./pages/StockPage";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/balancesheet" element={<BalanceSheetPage />} />
         <Route path="/productlist" element={<ProductListPage />} />
         <Route path="/orderpage" element={<OrderPage />} />
+        <Route path="/netprofit" element={<NetProfitPage />} />
+        <Route path="/stocks" element={<StockPage />} />
       </Routes>
     </Router>
   );

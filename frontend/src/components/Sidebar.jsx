@@ -28,6 +28,16 @@ const Sidebar = () => {
             Balance Sheet
           </Link>
         </li>
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+          <Link to="/netprofit" className="block">
+            Net Profit
+          </Link>
+        </li>
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+          <Link to="/stocks" className="block">
+            Stocks
+          </Link>
+        </li>
       </ul>
     </div>
   );
