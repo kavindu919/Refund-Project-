@@ -17,15 +17,15 @@ model User {
 }
 
 model Product {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  actualPrice Float
-  price       Float
-  description String
-  image       String
-  productId   String @unique
-
-  DamageClaim DamageClaim[]
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  actualPrice   Float
+  price         Float
+  description   String
+  image         String
+  productId     String        @unique
+  stockQuantity Int
+  DamageClaim   DamageClaim[]
 }
 
 model DamageClaim {
